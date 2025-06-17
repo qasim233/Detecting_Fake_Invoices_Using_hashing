@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Invoice Detector - AI-Powered Authentication</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>InvoiceGuard</span>
+                </div>
+                <nav class="nav">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#how-it-works" class="nav-link">How It Works</a>
+                    <a href="#stats" class="nav-link">Statistics</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Detect Fake Invoices with 
+                        <span class="gradient-text">AI Precision</span>
+                    </h1>
+                    <p class="hero-description">
+                        Upload your invoice and get instant verification using advanced SHA256 hashing technology. 
+                        Protect your business from fraudulent documents with 99.9% accuracy.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number" id="total-invoices">0</div>
+                            <div class="stat-label">Invoices Analyzed</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">99.9%</div>
+                            <div class="stat-label">Accuracy Rate</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">&lt;1s</div>
+                            <div class="stat-label">Detection Time</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-upload">
+                    <div class="upload-container">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h3>Drop your invoice here</h3>
+                            <p>or <span class="upload-link">browse files</span></p>
+                            <input type="file" id="fileInput" accept="image/*" hidden>
+                            <div class="upload-info">
+                                <small>Supports: JPG, PNG, GIF, BMP, TIFF (Max 16MB)</small>
+                            </div>
+                        </div>
+                        <div class="upload-progress" id="uploadProgress" style="display: none;">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <p>Analyzing invoice...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results" id="results" style="display: none;">
+        <div class="container">
+            <div class="results-content">
+                <div class="result-image">
+                    <img id="resultImage" src="/placeholder.svg" alt="Uploaded Invoice">
+                </div>
+                <div class="result-details">
+                    <div class="result-status" id="resultStatus">
+                        <!-- Status will be populated by JavaScript -->
+                    </div>
+                    <div class="result-info">
+                        <div class="info-item">
+                            <span class="info-label">Confidence:</span>
+                            <span class="info-value" id="confidence">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Hash:</span>
+                            <span class="info-value hash-value" id="hashValue">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Analysis:</span>
+                            <span class="info-value" id="analysisReason">-</span>
+                        </div>
+                        <div class="info-item" id="metadataInfo" style="display: none;">
+                            <span class="info-label">Source:</span>
+                            <span class="info-value" id="sourceInfo">-</span>
+                        </div>
+                    </div>
+                    <div class="result-actions">
+                        <button class="btn btn-primary" onclick="resetUpload()">
+                            <i class="fas fa-upload"></i>
+                            Analyze Another Invoice
+                        </button>
+                        <button class="btn btn-secondary" onclick="downloadReport()">
+                            <i class="fas fa-download"></i>
+                            Download Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3>Upload Invoice</h3>
+                    <p>Simply drag and drop or browse to upload your invoice image in any common format.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3>Generate Hash</h3>
+                    <p>Our system generates a unique SHA256 hash fingerprint of your invoice image.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Database Check</h3>
+                    <p>The hash is compared against our database of legitimate invoice fingerprints.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <h3>Get Results</h3>
+                    <p>Receive instant verification with detailed analysis and confidence scores.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section id="stats" class="statistics">
+        <div class="container">
+            <h2 class="section-title">Database Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="dbTotalHashes">Loading...</div>
+                        <div class="stat-label">Legitimate Invoices</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="dbStatus">Loading...</div>
+                        <div class="stat-label">Database Status</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">Real-time</div>
+                        <div class="stat-label">Detection Speed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2024 InvoiceGuard. Powered by AI and SHA256 Technology.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

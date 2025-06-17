@@ -1,0 +1,6 @@
+datasets 
+Pillow 
+transformers 
+torch
+Werkzeug
+Flask
