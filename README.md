@@ -20,15 +20,15 @@ This project is a web-based tool for detecting fake invoices using SHA256 image 
 ### 1. Clone the Repository
 Clone the repository to your local machine:
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/qasim233/Detecting_Fake_Invoices_Using_hashing
 cd Hashing_On_Invoice
 ```
 
 ### 2. Create and Activate a Virtual Environment
 **On Windows:**
 ```bash
-python -m venv venv
-venv\Scripts\activate
+python -m venv .venv
+.venv\Scripts\activate
 ```
 **On macOS/Linux:**
 ```bash
@@ -47,8 +47,7 @@ pip install -r requirements.txt
 ## Project Structure & File Explanations
 
 ```
-Hashing_On_Invoice/
-│
+
 ├── app.py                        # Main Flask web application
 ├── requirements.txt              # Python dependencies
 ├── legitimate_invoice_hashes.pkl # Pickle file with legitimate invoice hashes and metadata
@@ -75,11 +74,12 @@ Hashing_On_Invoice/
 └── .venv/                        # Python virtual environment (not uploaded to GitHub)
 ```
 
-### File/Directory Details
+### File/Directory Details and Dataset
 - **app.py**: Main entry point. Runs the Flask server, handles uploads, and performs invoice verification.
 - **requirements.txt**: Lists all Python dependencies.
 - **legitimate_invoice_hashes.pkl**: Binary file storing SHA256 hashes and metadata for legitimate invoices.
 - **legitimate_invoice_hashes.json**: JSON summary of the hash database for inspection.
+Note: The invoice data is taken from Hugging face datasets named: **"katanaml-org/invoices-donut-data-v1"**
 
 #### scripts/
 - **invoice_detector.py**: Build, save, load, and check invoice image hashes. Also builds the hash database from datasets.
@@ -174,12 +174,6 @@ Install all dependencies with:
 ```bash
 pip install -r requirements.txt
 ```
-
----
-
-## License
-Specify your license here.
-
 ---
 
 ## Contact
